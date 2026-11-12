@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Estoque e alertas | Mercado Estrela da Chabilândia{% endblock %}
+{% block content %}
+<section class="painel">
+  <div class="cabecalho-pagina">
+    <div><p class="etiqueta">CONSULTA</p><h1>Estoque e alertas</h1>
+    <p>Acompanhe as quantidades e as datas de validade dos produtos.</p></div>
+    <a class="botao primario" href="{{ url_for('cadastro') }}">＋ Cadastrar produto</a>
+  </div>
+
+  {% set vencidos = produtos | selectattr('vencido') | list %}
+  {% set validade_alerta = produtos | selectattr('perto_validade') | list %}
+  {% set estoque_alerta = produtos | selectattr('estoque_baixo') | list %}
+
+  <div class="resumo-alertas" aria-label="Resumo dos alertas">
+    <div class="resumo vencido"><strong>{{ vencidos|length }}</strong><span>Vencidos</span></div>
+    <div class="resumo atencao"><strong>{{ validade_alerta|length }}</strong><span>Próximos do vencimento</span></div>
+    <div class="resumo baixo"><strong>{{ estoque_alerta|length }}</strong><span>Estoque baixo</span></div>
+  </div>
+
+  {% if produtos %}
+  <div class="tabela-area">
+    <table>
+      <caption>Produtos cadastrados e situação do estoque</caption>
+      <thead><tr><th scope="col">Produto</th><th scope="col">Quantidade</th><th scope="col">Validade</th><th scope="col">Estoque mínimo</th><th scope="col">Situação</th><th scope="col">Ação</th></tr></thead>
+      <tbody>
+      {% for p in produtos %}
+        <tr>
+          <td data-label="Produto">{{ p.nome }}</td>
+          <td data-label="Quantidade">{{ p.quantidade }}</td>
+          <td data-label="Validade">{{ p.validade_formatada }}</td>
+          <td data-label="Estoque mínimo">{{ p.estoque_minimo }}</td>
+          <td data-label="Situação">
+            {% if p.vencido %}<span class="selo vencido">● Produto vencido</span>
+            {% elif p.perto_validade %}<span class="selo atencao">! Próximo do vencimento</span>{% endif %}
+            {% if p.estoque_baixo %}<span class="selo baixo">! Estoque baixo</span>{% endif %}
+            {% if not p.vencido and not p.perto_validade and not p.estoque_baixo %}<span class="selo normal">✓ Dentro dos limites</span>{% endif %}
+          </td>
+          <td data-label="Ação">
+            <form method="post" action="{{ url_for('excluir', produto_id=p.id) }}" onsubmit="return confirm('Deseja remover este produto?');">
+              <button class="botao-excluir" type="submit" aria-label="Remover {{ p.nome }}">Remover</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="vazio">
+      <span aria-hidden="true">📦</span>
+      <h2>Nenhum produto cadastrado</h2>
+      <p>Cadastre o primeiro produto para começar a acompanhar o estoque.</p>
+      <a class="botao primario" href="{{ url_for('cadastro') }}">Cadastrar primeiro produto</a>
+    </div>
+  {% endif %}
+
+  <p class="explicacao-alertas">Regra dos alertas: validade nos próximos {{ dias_alerta }} dias; estoque baixo quando a quantidade for igual ou inferior ao estoque mínimo.</p>
+  <a class="link-voltar" href="{{ url_for('inicio') }}">← Voltar ao início</a>
+</section>
+{% endblock %}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sistema acadêmico de controle de estoque do Mercado Estrela da Chabilândia.">
+  <title>{% block title %}Mercado Estrela da Chabilândia{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <header class="topo">
+    <a class="marca" href="{{ url_for('inicio') }}" aria-label="Mercado Estrela da Chabilândia - página inicial">
+      <span class="marca-icone" aria-hidden="true">🛒</span>
+      <span><strong>Mercado Estrela da Chabilândia</strong><small>Controle de estoque</small></span>
+    </a>
+    <span class="acessibilidade">♿ Interface acessível</span>
+  </header>
+
+  <main id="conteudo" class="container">
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+      {% if mensagens %}
+        {% for categoria, mensagem in mensagens %}
+          <div class="mensagem {{ categoria }}" role="status">{{ mensagem }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="rodape">Mercado Estrela da Chabilândia · Projeto acadêmico de MVP</footer>
+</body>
+</html>

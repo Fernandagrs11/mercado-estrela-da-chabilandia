@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Início | Mercado Estrela da Chabilândia{% endblock %}
+{% block content %}
+<section class="boas-vindas">
+  <p class="etiqueta">CONTROLE DE ESTOQUE</p>
+  <h1>Bem-vindo!</h1>
+  <p class="introducao">Organize os produtos do mercado e acompanhe os alertas de validade e quantidade.</p>
+  <div class="acoes-inicio">
+    <a class="cartao acao-principal" href="{{ url_for('cadastro') }}">
+      <span class="cartao-icone" aria-hidden="true">＋</span>
+      <span class="cartao-titulo">Cadastrar produto</span>
+      <span>Adicione um produto ao estoque.</span>
+    </a>
+    <a class="cartao" href="{{ url_for('resultados') }}">
+      <span class="cartao-icone" aria-hidden="true">▤</span>
+      <span class="cartao-titulo">Consultar estoque</span>
+      <span>Visualize produtos e alertas.</span>
+    </a>
+  </div>
+  <p class="dica">Dica: mantenha as quantidades e datas de validade atualizadas para facilitar o acompanhamento.</p>
+</section>
+{% endblock %}

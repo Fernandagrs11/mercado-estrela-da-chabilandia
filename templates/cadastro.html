@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Cadastrar produto | Mercado Estrela da Chabilândia{% endblock %}
+{% block content %}
+<section class="painel">
+  <div class="cabecalho-pagina">
+    <div><p class="etiqueta">CADASTRO</p><h1>Cadastrar produto</h1>
+    <p>Preencha os dados para adicionar um produto ao estoque.</p></div>
+    <a class="link-voltar" href="{{ url_for('inicio') }}">← Início</a>
+  </div>
+
+  <form method="post" class="formulario">
+    <div class="campo">
+      <label for="nome">Nome do produto <span aria-hidden="true">*</span></label>
+      <input id="nome" name="nome" type="text" maxlength="100" required
+             value="{{ valores.get('nome', '') }}" placeholder="Ex.: Arroz 5 kg">
+    </div>
+    <div class="grade-campos">
+      <div class="campo">
+        <label for="quantidade">Quantidade <span aria-hidden="true">*</span></label>
+        <input id="quantidade" name="quantidade" type="number" min="0" step="1" required
+               value="{{ valores.get('quantidade', '') }}" placeholder="Ex.: 10">
+      </div>
+      <div class="campo">
+        <label for="estoque_minimo">Estoque mínimo <span aria-hidden="true">*</span></label>
+        <input id="estoque_minimo" name="estoque_minimo" type="number" min="0" step="1" required
+               value="{{ valores.get('estoque_minimo', '') }}" placeholder="Ex.: 5">
+      </div>
+    </div>
+    <div class="campo">
+      <label for="data_validade">Data de validade <span aria-hidden="true">*</span></label>
+      <input id="data_validade" name="data_validade" type="date" required
+             value="{{ valores.get('data_validade', '') }}">
+      <small>O sistema destacará produtos que vencem nos próximos 7 dias.</small>
+    </div>
+    <div class="botoes-form">
+      <button class="botao primario" type="submit">Salvar produto</button>
+      <a class="botao secundario" href="{{ url_for('inicio') }}">Voltar</a>
+    </div>
+    <p class="nota-campos">* Campos obrigatórios.</p>
+  </form>
+</section>
+{% endblock %}
