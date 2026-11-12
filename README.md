@@ -35,6 +35,17 @@ python app.py
 - Para testar o alerta de validade, cadastre um produto com validade dentro dos próximos 7 dias.
 - A tela de estoque apresenta os alertas e a lista de produtos.
 
+- ## Revisão Técnica e Melhorias
+
+Durante a auto-revisão do projeto, foram identificados pontos importantes para melhorar a qualidade e a segurança do sistema.
+
+- **Validação de dados:** verificar se os campos obrigatórios foram preenchidos e se as quantidades informadas são números inteiros não negativos.
+- **Organização do código:** manter a separação entre as rotas da aplicação, os arquivos HTML e os estilos CSS, facilitando a manutenção.
+- **Segurança:** utilizar consultas parametrizadas no SQLite para evitar problemas relacionados à inserção de dados no banco.
+- **Usabilidade:** apresentar mensagens claras para indicar erros de preenchimento e alertas de estoque baixo ou produtos próximos do vencimento.
+
+Essas melhorias contribuem para tornar o MVP mais organizado, seguro e fácil de utilizar, além de facilitar futuras implementações.
+
 ## Observações
 - O banco `estoque.db` é criado automaticamente na primeira execução.
 - Os dados ficam armazenados localmente no computador.
